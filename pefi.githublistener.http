@@ -1,0 +1,6 @@
+@pefi.githublistener_HostAddress = http://localhost:5268
+
+GET {{pefi.githublistener_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
