@@ -7,11 +7,13 @@ EXPOSE 8080
 
 FROM  --platform=$BUILDPLATFORM  mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
 COPY ["pefi.githublistener.csproj", "."]
 RUN --mount=type=secret,id=github_token,env=GITHUB_TOKEN dotnet nuget add source --username petefield --password $GITHUB_TOKEN --store-password-in-clear-text --name petefield "https://nuget.pkg.github.com/petefield/index.json"
 
 RUN dotnet restore ".pefi.githublistener.csproj"
 COPY . .
+WORKDIR "/src/."
 RUN dotnet build "./pefi.githublistener.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
