@@ -13,7 +13,6 @@ RUN --mount=type=secret,id=github_token,env=GITHUB_TOKEN dotnet nuget add source
 
 RUN dotnet restore ".pefi.githublistener.csproj"
 COPY . .
-WORKDIR "/src/."
 RUN dotnet build "./pefi.githublistener.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
